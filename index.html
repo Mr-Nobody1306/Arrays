@@ -1,39 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" sizes="32x32" href="">
-  
-  <title>Four card feature section</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be Mine? 💖</title>
 
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ff9ecb, #ffc3a0);
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+}
+
+h3 {
+    font-size: 28px;
+    margin-bottom: 25px;
+    color: #fff;
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+button {
+    font-size: 18px;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.yes {
+    background: #ff4d88;
+    color: white;
+    box-shadow: 0 6px 20px rgba(255, 77, 136, 0.4);
+}
+
+.yes:hover {
+    transform: translateY(-3px) scale(1.05);
+}
+
+.no {
+    background: #4ade80;
+    color: white;
+    box-shadow: 0 6px 20px rgba(74, 222, 128, 0.4);
+}
+
+#hurray {
+    font-size: 22px;
+    color: #fff;
+    margin-top: 20px;
+    animation: pop 0.5s ease;
+}
+
+iframe {
+    margin-top: 20px;
+    border-radius: 15px;
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
-  <section><span class="feature-title">Reliable, efficient delivery</span>
-  <h1 class="motto">Powered by Technology</h1>
 
-  <p class="about">Our Artificial Intelligence powered tools use millions of project data points 
-  to ensure that your project is successful</p></section>
-  
-<div class="cards">
-  <section class="Supervisor"><h3>Supervisor</h3><p>Monitors activity to identify project roadblocks</p>
-  <i class="icon1"></i>
-  </section>
-<div class="card-mid">
-  <section class="Team-Builder"><h3>Team Builder</h3><p>Scans our talent network to create the optimal team for your project</p>
-  <i class="icon2"></i>
-  </section>
-  <section class="Karma"><h3>Karma</h3><p>Regularly evaluates our talent to ensure quality</p>
-  <i class="icon3"></i>
-  </section>
+<div class="container">
+    <h3>Will you be my Valentine? 💖</h3>
+
+    <div class="buttons">
+        <button class="yes" id="yes">Yes 😍</button>
+        <button class="no" id="no">No 😢</button>
+    </div>
+
+    <p id="hurray"></p>
 </div>
 
-  <section class="Calculator"><h3>Calculator</h3><p>Uses data from past projects to provide better delivery estimates</p>
-  <i class="icon4"></i>
-  </section>
-</div>
-</div>
+<script>
+const yesButton = document.getElementById('yes');
+const noButton = document.getElementById('no');
+const hurray = document.getElementById('hurray');
+
+yesButton.addEventListener('click', () => {
+    hurray.textContent = "Yayyy! You just made me the happiest 💖";
+
+    const video = document.createElement('iframe');
+    video.src = "https://www.youtube.com/embed/ZAXapELgwZM?autoplay=1&mute=1";
+    video.width = "260";
+    video.height = "200";
+    video.setAttribute("allowfullscreen", "");
+
+    document.querySelector('.container').appendChild(video);
+
+    noButton.remove();
+});
+
+noButton.addEventListener('click', () => {
+    const yesWidth = yesButton.offsetWidth;
+    const yesHeight = yesButton.offsetHeight;
+
+    yesButton.style.width = `${yesWidth + 40}px`;
+    yesButton.style.height = `${yesHeight + 40}px`;
+});
+
+noButton.addEventListener('mouseover', () => {
+    if (yesButton.offsetWidth > 200) {
+        const randomX = Math.random() * (window.innerWidth - 120);
+        const randomY = Math.random() * (window.innerHeight - 60);
+
+        noButton.style.position = 'absolute';
+        noButton.style.left = `${randomX}px`;
+        noButton.style.top = `${randomY}px`;
+    }
+});
+</script>
+
 </body>
 </html>
