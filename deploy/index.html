@@ -2,163 +2,135 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f6">
 <link rel="stylesheet" href="style.css">
-<title>Arrays in the Real World — Phone Contacts in C++</title>
+<title>Contacts — Array Phone App (C++)</title>
 </head>
 <body>
-<div class="wrap">
-  <div class="hero">
-    <span class="badge">Data Structures • Arrays • C++ • Phone App</span>
-    <h1>Real-World Applications That Require Arrays</h1>
-    <p>An array is an <b>ordered, indexed, contiguous</b> collection. A phone contact list is exactly that: <b>Contact contacts[8]</b> — structs side-by-side in memory, found by index in O(1), searched in a loop. Below: 6 real uses, <b>why</b> arrays are necessary, and a <b>working phone contact app in C++</b> you can run and compile.</p>
-    <div class="hero-grid">
-      <span class="pill">struct Contact { char name[30]; char phone[16]; };</span>
-      <span class="pill">contacts[2] → O(1)</span>
-      <button class="btn btn-primary" id="jumpLabBtn">▶ Try the phone app ↓</button>
-      <button class="btn btn-ghost" id="topDlBtn">⬇ contacts.cpp</button>
+
+<div class="iphone">
+  <!-- LIST -->
+  <section class="view" id="viewListCtn">
+    <div class="navbar">
+      <button class="navbtn" id="arrayNavBtn">Array</button>
+      <button class="navbtn" id="addNavBtn" style="font-size:26px; line-height:1">+</button>
+    </div>
+    <div class="navbar"><h1>Contacts</h1></div>
+    <div class="searchrow"><div class="searchbox">⌕<input id="searchInput" type="text" placeholder="Search"></div></div>
+    <div class="listWrap" id="listWrapCtn">
+      <div id="sectionsCtn"></div>
+      <div class="alphaIdx" id="alphaIdxCtn"></div>
+    </div>
+  </section>
+
+  <!-- DETAIL -->
+  <section class="view" id="viewDetailCtn" hidden>
+    <div class="navbar" style="background:#f2f2f6">
+      <button class="navbtn" id="backBtn">‹ Contacts</button>
+      <button class="navbtn" id="editToggleBtn">Edit</button>
+    </div>
+    <div class="listWrap">
+      <div class="detailTop">
+        <div class="bigAvatar" id="detailAvatarEl">Y</div>
+        <div id="detailNameWrap"><div class="detailName" id="detailNameEl">Yaw Darko</div></div>
+        <div class="quickActions">
+          <div class="qa"><button id="detailCallBtn">✆</button><span>call</span></div>
+          <div class="qa"><button id="detailMsgBtn">💬</button><span>message</span></div>
+          <div class="qa"><button id="detailMailBtn">✉</button><span>mail</span></div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="frow"><span class="lab">mobile</span><a class="val" id="detailPhoneEl">027-342-8890</a></div>
+        <div class="frow"><span class="lab">array index</span><span class="val" id="detailIdxEl" style="font-family:ui-monospace,monospace; font-size:13px">[3] of 6</span></div>
+      </div>
+      <button class="dangerBtn" id="deleteContactBtn">Delete Contact</button>
+      <div style="height:30px"></div>
+    </div>
+  </section>
+
+  <!-- ADD / EDIT FORM -->
+  <section class="view" id="viewFormCtn" hidden>
+    <div class="navbar" style="background:#f2f2f6">
+      <button class="navbtn" id="formCancelBtn">Cancel</button>
+      <span class="navtitle" id="formTitleEl">New Contact</span>
+      <button class="navbtn" id="formDoneBtn" style="font-weight:700">Done</button>
+    </div>
+    <div class="listWrap">
+      <div class="formTop"><div class="formAva">add photo</div></div>
+      <div class="formCard">
+        <input id="firstInput" type="text" maxlength="20" placeholder="First name">
+        <input id="lastInput" type="text" maxlength="20" placeholder="Last name">
+      </div>
+      <div class="formCard">
+        <input id="phoneInput" type="tel" maxlength="15" placeholder="add phone">
+      </div>
+      <p class="muted" id="formMsgEl" style="padding:0 14px"></p>
+    </div>
+  </section>
+
+  <!-- ARRAY INSPECTOR -->
+  <section class="view" id="viewArrayCtn" hidden>
+    <div class="navbar" style="background:#f2f2f6">
+      <button class="navbtn" id="arrayBackBtn">‹ Contacts</button>
+      <span class="navtitle">Array</span>
+      <span style="width:70px"></span>
+    </div>
+    <div class="arrayScroll">
+      <div class="stats">
+        <div class="stat"><small>used n</small><b id="stNEl">6/8</b></div>
+        <div class="stat"><small>capacity</small><b>8</b></div>
+        <div class="stat"><small>search</small><b id="stCmpEl">–</b></div>
+        <div class="stat"><small>sorted?</small><b id="stSortEl">yes</b></div>
+      </div>
+      <div class="card">
+        <h4>Explanation & source</h4>
+        <div class="rowbtns">
+          <button class="btn btn-primary btn-sm" id="pdfBtn">📄 Guide PDF</button>
+          <button class="btn btn-dark btn-sm" id="copyCppBtn">📋 Copy C++</button>
+          <button class="btn btn-ghost btn-sm" id="dlCppBtn">⬇ .cpp</button>
+          <button class="btn btn-ghost btn-sm" id="resetBtn">↺ Reset</button>
+        </div>
+        <p class="muted" id="cppMsgEl" style="margin:6px 0 0"></p>
+      </div>
+      <div class="card">
+        <h4>Demo ops</h4>
+        <div class="rowbtns">
+          <button class="btn btn-ghost btn-sm" id="fillBtn">fill to 8</button>
+          <button class="btn btn-ghost btn-sm" id="shuffleBtn">shuffle</button>
+          <button class="btn btn-ghost btn-sm" id="sortBtn2">sort A–Z</button>
+          <button class="btn btn-ghost btn-sm" id="clearSearchBtn">clear search</button>
+        </div>
+      </div>
+      <div class="cppview"><h4>C++ just executed</h4><pre id="cppViewEl">Contact contacts[8]; int n = 6;</pre></div>
+      <div class="log" id="logCtn"><div><span class="info">›</span> ready.</div></div>
+    </div>
+  </section>
+
+  <!-- DELETE CONFIRM -->
+  <div class="mask" id="delMaskCtn" hidden>
+    <div class="asheet">
+      <div class="grp"><button class="danger" id="confirmDelBtn">Delete Contact</button></div>
+      <div class="grp"><button class="cancel" id="cancelDelBtn">Cancel</button></div>
     </div>
   </div>
 
-  <section class="card">
-    <h2>1. Why are arrays necessary?</h2>
-    <p class="muted">200 contacts as 200 variables (c1 … c200) can't be listed, searched or sorted. One array + loops does it all — and in C++ the structs sit contiguously for cache-fast scans.</p>
-    <div class="why">
-      <div><b>📦 Order + O(1) index</b><p>Contact #2 opens instantly: contacts[2] compiles to one pointer add. No traversal.</p></div>
-      <div><b>🔁 Loop everything</b><p>List all, search “Yaw”, sort A–Z, count — one for-loop each. Impossible with scattered variables.</p></div>
-      <div><b>⚡ Contiguous structs</b><p>Array of Contact = one memory block. Scanning names is cache-friendly — why phones hold contacts this way.</p></div>
-      <div><b>📏 Capacity + size</b><p>Fixed CAPACITY, logical n. Add = fill slot; delete = shift left. std::vector automates it later.</p></div>
+  <!-- CALL -->
+  <div class="calling" id="callingCtn" hidden>
+    <div class="bigAvatar" id="callingAvatarEl">Y</div>
+    <b id="callingNameEl" style="font-size:28px; font-weight:600">Yaw</b>
+    <span id="callingNumEl" style="color:#d1d1d6">mobile</span>
+    <span id="callingTimerEl" style="font-size:14px; color:#d1d1d6">calling…</span>
+    <div class="callGrid">
+      <div class="cg"><button data-f="mute">🔇</button><span>mute</span></div>
+      <div class="cg"><button data-f="keypad">▦</button><span>keypad</span></div>
+      <div class="cg"><button data-f="speaker">🔊</button><span>speaker</span></div>
+      <div class="cg"><button data-f="ft">📹</button><span>FaceTime</span></div>
+      <div class="cg"><button data-f="msg">💬</button><span>message</span></div>
+      <div class="cg"><button data-f="con">👥</button><span>contacts</span></div>
     </div>
-  </section>
-
-  <section class="card">
-    <h2>2. Six real-world applications that require arrays</h2>
-    <div class="apps">
-      <div class="app chosen">
-        <div class="icon">📱</div><h4>1. Phone Contacts — ⭐ BUILT BELOW</h4>
-        <p>Ordered struct list. Add/remove with shifts, substring search, sort A–Z. Index = position in list.</p>
-        <code>Contact book[100]; int n;
-book[i].phone // O(1)</code>
-      </div>
-      <div class="app">
-        <div class="icon">🎓</div><h4>2. Classroom Gradebook</h4>
-        <p>Scores per student. Average, max/min, sort, filter pass/fail. Same array pattern, int instead of struct.</p>
-        <code>int grades[100] = {85,92,78}; int n=3;</code>
-      </div>
-      <div class="app">
-        <div class="icon">🖼️</div><h4>3. Digital Images</h4>
-        <p>Photo = flat pixel array. Filters index neighbours by arithmetic.</p>
-        <code>uint8_t img[1080*1920*4];
-img[(y*W+x)*4];</code>
-      </div>
-      <div class="app">
-        <div class="icon">🎵</div><h4>4. Music Playlist</h4>
-        <p>Order is the feature: next, shuffle, reorder by index swap.</p>
-        <code>string q[50]; swap(q[i],q[j]);</code>
-      </div>
-      <div class="app">
-        <div class="icon">🌡️</div><h4>5. Sensor / Weather Log</h4>
-        <p>Hourly readings, time order preserved for charts and averages.</p>
-        <code>double t[24*30];
-t[now]-t[now-24];</code>
-      </div>
-      <div class="app">
-        <div class="icon">🏆</div><h4>6. Leaderboard / Tile Map</h4>
-        <p>Scores sorted descending; map[y][x] collision lookup.</p>
-        <code>sort(b,b+n,greater());
-map[y][x];</code>
-      </div>
-    </div>
-  </section>
-
-  <section class="card" id="labSection">
-    <h2>3. Built app: 📱 Phone Contacts (C++ arrays)</h2>
-    <p class="muted">A phone-frame contact manager. Logic mirrors exactly: <b>Contact contacts[8]</b>, <b>int n</b>, append O(1), delete with left-shift O(n), linear substring search with comparison count, sort A–Z. Tap a row to edit, use tabs below the phone.</p>
-    <div class="row" style="margin-bottom:10px">
-      <button class="btn btn-dark btn-sm" id="copyCppBtn">📋 Copy C++</button>
-      <button class="btn btn-ghost btn-sm" id="dlCppBtn">⬇ Download contacts.cpp</button>
-      <button class="btn btn-ghost btn-sm" id="resetBtn">↺ Reset demo</button>
-      <span class="muted" id="cppMsgEl" style="font-size:13px"></span>
-    </div>
-    <div class="lab2">
-      <div class="phone">
-        <div class="screen">
-          <div class="notch"></div>
-          <div class="statusbar"><span id="clockEl">9:41</span><span>📶 🔋</span></div>
-          <div class="apphead"><h3>Contacts</h3><small id="countEl">6 / 8 • array of struct</small></div>
-          <div class="searchrow"><input id="searchInput" type="text" placeholder="🔍 Search names (linear search)"></div>
-          <div class="contactList" id="contactListCtn"></div>
-          <div class="sheet" id="addSheetCtn" hidden>
-            <h4 id="sheetTitleEl">New contact</h4>
-            <input id="nameInput" type="text" maxlength="28" placeholder="Name">
-            <input id="phoneInput" type="tel" maxlength="15" placeholder="Phone e.g. 055-000-0000">
-            <div class="row">
-              <button class="btn btn-dark btn-sm" id="saveContactBtn">Save</button>
-              <button class="btn btn-ghost btn-sm" id="cancelSheetBtn">Cancel</button>
-              <span class="muted" id="sheetMsgEl" style="font-size:12px"></span>
-            </div>
-          </div>
-          <div class="calling" id="callingCtn" hidden>
-            <div class="bigAvatar" id="callingAvatarEl">Y</div>
-            <b id="callingNameEl" style="font-size:20px">Yaw</b>
-            <span id="callingNumEl" class="muted" style="color:#cbd5e1">027…</span>
-            <span id="callingTimerEl" style="font-family:ui-monospace,monospace">00:00</span>
-            <button class="endBtn" id="endCallBtn">✆</button>
-          </div>
-          <div class="tabbar">
-            <button id="tabAddBtn">＋<br>Add</button>
-            <button id="tabSortBtn">A–Z<br>Sort</button>
-            <button id="tabShuffleBtn">🔀<br>Shuffle</button>
-            <button id="tabFillBtn">▦<br>Fill</button>
-          </div>
-        </div>
-      </div>
-      <div class="side">
-        <div class="side-head"><h3>Array inspector — <code>Contact contacts[8]; int n;</code></h3></div>
-        <div class="side-body">
-          <div class="stats">
-            <div class="stat"><small>used n</small><b id="stNEl">–</b></div>
-            <div class="stat"><small>capacity</small><b>8</b></div>
-            <div class="stat"><small>last search</small><b id="stCmpEl">–</b></div>
-            <div class="stat"><small>sorted?</small><b id="stSortEl">–</b></div>
-          </div>
-          <div class="ctl">
-            <h4>Selected index (tap a row)</h4>
-            <div class="row">
-              <span class="muted" id="selInfoEl" style="font-size:13px">nothing selected</span>
-            </div>
-            <div class="row" style="margin-top:8px">
-              <button class="btn btn-dark btn-sm" id="editBtn">✏️ Edit</button>
-              <button class="btn btn-dark btn-sm" id="delBtn">🗑 Delete (shift)</button>
-              <button class="btn btn-ghost btn-sm" id="callBtn">📞 Call</button>
-            </div>
-          </div>
-          <div class="ctl">
-            <h4>Array operations</h4>
-            <div class="row">
-              <button class="btn btn-ghost btn-sm" id="sortBtn2">sort A–Z</button>
-              <button class="btn btn-ghost btn-sm" id="clearSearchBtn">clear search</button>
-            </div>
-            <p class="muted" style="font-size:12.5px;margin:8px 0 0">Delete shows the key array lesson: every element after index shifts left one slot — O(n). Fill to 8/8 then Add to see overflow.</p>
-          </div>
-        </div>
-        <div class="cppview"><h4>C++ just executed</h4><pre id="cppViewEl">Contact contacts[8]; int n = 6;</pre></div>
-        <div class="log" id="logCtn"><div><span class="info">›</span> ready. tap a contact, search, add, delete.</div></div>
-      </div>
-    </div>
-    <div class="note">💡 <b>Why structs in an array?</b> Each contact has two fields (name + phone) but the <i>collection</i> is still an array — contiguous Contacts, indexed by position. That's the pattern behind every contact list, playlist, and inventory: <b>array of structs</b>.</div>
-  </section>
-
-  <section class="card">
-    <h2>4. Try it — challenges</h2>
-    <ol style="font-size:14.5px">
-      <li>Insert — add more contacts to the array</li>
-      <li>Search <b>“am”</b> — watch comparison count. That's linear search O(n).</li>
-      <li>Delete index 1 — later contacts shift left. Add again — fills slot n.</li>
-      <li>Fill to 8/8, add once more → overflow, like real fixed buffers.</li>
-    </ol>
-  </section>
-  <div class="footer">Phone contacts = array of structs • index O(1), search/sort/shift O(n log n / n)</div>
+    <button class="endBtn" id="endCallBtn">✆</button>
+  </div>
 </div>
 
 <script src="action.js"></script>

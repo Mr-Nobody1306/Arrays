@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 
-const int CAPACITY = 8;
+const int CAPACITY = 20;
 
 struct Contact {
     char name[30];
