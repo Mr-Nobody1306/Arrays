@@ -65,8 +65,8 @@ void sortByName(Contact c[], int n) {
 int main() {
     Contact contacts[CAPACITY];
     int n = 0;
-    addContact(contacts, n, "Ama Serwaa", "055-123-4567");
-    addContact(contacts, n, "Kwame Mensah", "024-987-6543");
+    addContact(contacts, n, "Mr Nobody", "059-780-8824");
+    addContact(contacts, n, "Princess Essiam", "024-987-6543");
     addContact(contacts, n, "Auntie Efya", "020-555-0192");
     addContact(contacts, n, "Yaw Darko", "027-342-8890");
     addContact(contacts, n, "Mama Akos", "054-718-2301");
