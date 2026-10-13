@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrays in the Real World — Phone Contacts in C++</title>
+</head>
+<body>
 <style>
   *{box-sizing:border-box}
   body{background:#f1f5f9; color:#0f172a; text-align:left; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; margin:0; line-height:1.6}
@@ -38,8 +46,8 @@
   /* phone lab */
   .lab2{display:grid; grid-template-columns:380px 1fr; gap:16px; margin-top:14px; align-items:start}
   @media(max-width:900px){.lab2{grid-template-columns:1fr}}
-  .phone{width:340px; max-width:100%; margin:0 auto; background:#000; border-radius:46px; padding:12px; box-shadow:0 20px 50px rgba(0,0,0,.35)}
-  .screen{background:#f2f2f6; border-radius:36px; overflow:hidden; height:660px; display:flex; flex-direction:column; position:relative}
+  .phone{width:100%; max-width:340px; margin:0 auto; background:#000; border-radius:46px; padding:12px; box-shadow:0 20px 50px rgba(0,0,0,.35)}
+  .screen{background:#f2f2f6; border-radius:36px; overflow:hidden; height:660px; max-height:74vh; min-height:520px; display:flex; flex-direction:column; position:relative}
   .notch{position:absolute; top:12px; left:50%; transform:translateX(-50%); width:120px; height:26px; background:#000; border-radius:99px; z-index:5}
   .statusbar{display:flex; justify-content:space-between; padding:12px 22px 4px; font-size:12px; font-weight:700; color:#000}
   .apphead{padding:6px 16px 8px; background:#f2f2f6}
@@ -48,10 +56,10 @@
   .searchrow{padding:8px 16px; background:#f2f2f6}
   .searchrow input{width:100%; border:0; background:#e3e3e8; border-radius:10px; padding:9px 12px; font-size:14px}
   .contactList{flex:1; overflow-y:auto; background:#fff; padding-bottom:10px}
-  .cRow{display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid #f1f1f4; cursor:pointer}
+  .cRow{display:flex; align-items:center; gap:8px; padding:10px 10px; border-bottom:1px solid #f1f1f4; cursor:pointer}
   .cRow:hover{background:#f8fafc}
   .cRow.selected{background:#ecfeff}
-  .avatar{width:42px; height:42px; border-radius:99px; background:linear-gradient(135deg,#22d3ee,#a78bfa); color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0}
+  .avatar{width:38px; height:38px; border-radius:99px; background:linear-gradient(135deg,#22d3ee,#a78bfa); color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0}
   .cInfo{flex:1; min-width:0}
   .cInfo b{display:block; font-size:14.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
   .cInfo span{font-size:12.5px; color:#6b7280}
@@ -66,11 +74,13 @@
   .sheet input{width:100%; margin-bottom:8px; border:1px solid #d1d5db; border-radius:10px; padding:10px; font-size:15px}
   .side{background:#fff; border:2px solid #0f172a; border-radius:16px; overflow:hidden}
   .side-head{background:#0f172a; color:#fff; padding:12px 14px}
-  .side-head h3{margin:0; font-size:15px; color:#fff}
-  .side-head code{background:#1e293b; color:#a5f3fc; padding:2px 8px; border-radius:6px}
+  .side-head h3{margin:0; font-size:15px; color:#fff; overflow-wrap:anywhere}
+  .side-head code{background:#1e293b; color:#a5f3fc; padding:2px 8px; border-radius:6px; display:inline-block; max-width:100%; overflow-wrap:anywhere; font-size:12px}
   .side-body{padding:14px}
-  .stats{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
-  .stat{flex:1; min-width:90px; background:#0f172a; color:#fff; border-radius:10px; padding:8px; text-align:center}
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:12px}
+  @media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{min-width:0; background:#0f172a; color:#fff; border-radius:10px; padding:8px; text-align:center}
+  @media(max-width:480px){.cInfo b{font-size:14px} .callBtn{width:32px; height:32px} .wrap{padding:14px 10px 50px} section.card{padding:16px 12px}}
   .stat small{display:block; color:#94a3b8; font-size:10px; text-transform:uppercase; letter-spacing:.05em}
   .stat b{font-size:17px}
   .ctl{border:1px solid #e2e8f0; border-radius:12px; padding:10px; margin-bottom:10px}
@@ -96,10 +106,10 @@
   <div class="hero">
     <span class="badge">Data Structures • Arrays • C++ • Phone App</span>
     <h1>Real-World Applications That Require Arrays</h1>
-    <p>An array is an <b>ordered, indexed, contiguous</b> collection. A phone contact list is exactly that: <b>Contact contacts\[8\]</b> — structs side-by-side in memory, found by index in O(1), searched in a loop. Below: 6 real uses, <b>why</b> arrays are necessary, and a <b>working phone contact app in C++</b> you can run and compile.</p>
+    <p>An array is an <b>ordered, indexed, contiguous</b> collection. A phone contact list is exactly that: <b>Contact contacts[8]</b> — structs side-by-side in memory, found by index in O(1), searched in a loop. Below: 6 real uses, <b>why</b> arrays are necessary, and a <b>working phone contact app in C++</b> you can run and compile.</p>
     <div class="hero-grid">
-      <span class="pill">struct Contact \{ char name\[30\]; char phone\[16\]; \};</span>
-      <span class="pill">contacts\[2\] → O(1)</span>
+      <span class="pill">struct Contact { char name[30]; char phone[16]; };</span>
+      <span class="pill">contacts[2] → O(1)</span>
       <button class="btn btn-primary" id="jumpLabBtn">▶ Try the phone app ↓</button>
       <button class="btn btn-ghost" id="topDlBtn">⬇ contacts.cpp</button>
     </div>
@@ -109,7 +119,7 @@
     <h2>1. Why are arrays necessary?</h2>
     <p class="muted">200 contacts as 200 variables (c1 … c200) can't be listed, searched or sorted. One array + loops does it all — and in C++ the structs sit contiguously for cache-fast scans.</p>
     <div class="why">
-      <div><b>📦 Order + O(1) index</b><p>Contact #2 opens instantly: contacts\[2\] compiles to one pointer add. No traversal.</p></div>
+      <div><b>📦 Order + O(1) index</b><p>Contact #2 opens instantly: contacts[2] compiles to one pointer add. No traversal.</p></div>
       <div><b>🔁 Loop everything</b><p>List all, search “Yaw”, sort A–Z, count — one for-loop each. Impossible with scattered variables.</p></div>
       <div><b>⚡ Contiguous structs</b><p>Array of Contact = one memory block. Scanning names is cache-friendly — why phones hold contacts this way.</p></div>
       <div><b>📏 Capacity + size</b><p>Fixed CAPACITY, logical n. Add = fill slot; delete = shift left. std::vector automates it later.</p></div>
@@ -122,43 +132,43 @@
       <div class="app chosen">
         <div class="icon">📱</div><h4>1. Phone Contacts — ⭐ BUILT BELOW</h4>
         <p>Ordered struct list. Add/remove with shifts, substring search, sort A–Z. Index = position in list.</p>
-        <code>Contact book\[100\]; int n;
-book\[i\].phone // O(1)</code>
+        <code>Contact book[100]; int n;
+book[i].phone // O(1)</code>
       </div>
       <div class="app">
         <div class="icon">🎓</div><h4>2. Classroom Gradebook</h4>
         <p>Scores per student. Average, max/min, sort, filter pass/fail. Same array pattern, int instead of struct.</p>
-        <code>int grades\[100\] = \{85,92,78\}; int n=3;</code>
+        <code>int grades[100] = {85,92,78}; int n=3;</code>
       </div>
       <div class="app">
         <div class="icon">🖼️</div><h4>3. Digital Images</h4>
         <p>Photo = flat pixel array. Filters index neighbours by arithmetic.</p>
-        <code>uint8_t img\[1080*1920*4\];
-img\[(y*W+x)*4\];</code>
+        <code>uint8_t img[1080*1920*4];
+img[(y*W+x)*4];</code>
       </div>
       <div class="app">
         <div class="icon">🎵</div><h4>4. Music Playlist</h4>
         <p>Order is the feature: next, shuffle, reorder by index swap.</p>
-        <code>string q\[50\]; swap(q\[i\],q\[j\]);</code>
+        <code>string q[50]; swap(q[i],q[j]);</code>
       </div>
       <div class="app">
         <div class="icon">🌡️</div><h4>5. Sensor / Weather Log</h4>
         <p>Hourly readings, time order preserved for charts and averages.</p>
-        <code>double t\[24*30\];
-t\[now\]-t\[now-24\];</code>
+        <code>double t[24*30];
+t[now]-t[now-24];</code>
       </div>
       <div class="app">
         <div class="icon">🏆</div><h4>6. Leaderboard / Tile Map</h4>
-        <p>Scores sorted descending; map\[y\]\[x\] collision lookup.</p>
+        <p>Scores sorted descending; map[y][x] collision lookup.</p>
         <code>sort(b,b+n,greater());
-map\[y\]\[x\];</code>
+map[y][x];</code>
       </div>
     </div>
   </section>
 
   <section class="card" id="labSection">
     <h2>3. Built app: 📱 Phone Contacts (C++ arrays)</h2>
-    <p class="muted">A phone-frame contact manager. Logic mirrors <b>src/contacts.cpp</b> exactly: <b>Contact contacts\[8\]</b>, <b>int n</b>, append O(1), delete with left-shift O(n), linear substring search with comparison count, sort A–Z. Tap a row to edit, use tabs below the phone. Compile it with <b>g++ -std=c++17</b>.</p>
+    <p class="muted">A phone-frame contact manager. Logic mirrors <b>src/contacts.cpp</b> exactly: <b>Contact contacts[8]</b>, <b>int n</b>, append O(1), delete with left-shift O(n), linear substring search with comparison count, sort A–Z. Tap a row to edit, use tabs below the phone. Compile it with <b>g++ -std=c++17</b>.</p>
     <div class="row" style="margin-bottom:10px">
       <button class="btn btn-dark btn-sm" id="copyCppBtn">📋 Copy C++</button>
       <button class="btn btn-ghost btn-sm" id="dlCppBtn">⬇ Download contacts.cpp</button>
@@ -199,7 +209,7 @@ map\[y\]\[x\];</code>
         </div>
       </div>
       <div class="side">
-        <div class="side-head"><h3>Array inspector — <code>Contact contacts\[8\]; int n;</code></h3></div>
+        <div class="side-head"><h3>Array inspector — <code>Contact contacts[8]; int n;</code></h3></div>
         <div class="side-body">
           <div class="stats">
             <div class="stat"><small>used n</small><b id="stNEl">–</b></div>
@@ -227,7 +237,7 @@ map\[y\]\[x\];</code>
             <p class="muted" style="font-size:12.5px;margin:8px 0 0">Delete shows the key array lesson: every element after index shifts left one slot — O(n). Fill to 8/8 then Add to see overflow.</p>
           </div>
         </div>
-        <div class="cppview"><h4>C++ just executed</h4><pre id="cppViewEl">Contact contacts\[8\]; int n = 6;</pre></div>
+        <div class="cppview"><h4>C++ just executed</h4><pre id="cppViewEl">Contact contacts[8]; int n = 6;</pre></div>
         <div class="log" id="logCtn"><div><span class="info">›</span> ready. tap a contact, search, add, delete.</div></div>
       </div>
     </div>
@@ -430,3 +440,6 @@ map\[y\]\[x\];</code>
   render();
 })();
 </script>
+
+</body>
+</html>
