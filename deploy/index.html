@@ -168,7 +168,7 @@ map[y][x];</code>
 
   <section class="card" id="labSection">
     <h2>3. Built app: 📱 Phone Contacts (C++ arrays)</h2>
-    <p class="muted">A phone-frame contact manager. Logic mirrors <b>src/contacts.cpp</b> exactly: <b>Contact contacts[8]</b>, <b>int n</b>, append O(1), delete with left-shift O(n), linear substring search with comparison count, sort A–Z. Tap a row to edit, use tabs below the phone. Compile it with <b>g++ -std=c++17</b>.</p>
+    <p class="muted">A phone-frame contact manager. Logic mirrors exactly: <b>Contact contacts[8]</b>, <b>int n</b>, append O(1), delete with left-shift O(n), linear substring search with comparison count, sort A–Z. Tap a row to edit, use tabs below the phone.</p>
     <div class="row" style="margin-bottom:10px">
       <button class="btn btn-dark btn-sm" id="copyCppBtn">📋 Copy C++</button>
       <button class="btn btn-ghost btn-sm" id="dlCppBtn">⬇ Download contacts.cpp</button>
@@ -247,10 +247,10 @@ map[y][x];</code>
   <section class="card">
     <h2>4. Try it — challenges</h2>
     <ol style="font-size:14.5px">
+      <li>Insert — add more contacts to the array</li>
       <li>Search <b>“am”</b> — watch comparison count. That's linear search O(n).</li>
       <li>Delete index 1 — later contacts shift left. Add again — fills slot n.</li>
       <li>Fill to 8/8, add once more → overflow, like real fixed buffers.</li>
-      <li>Download contacts.cpp and compile: <b>g++ -std=c++17 -O2 -o contacts contacts.cpp && ./contacts</b></li>
     </ol>
   </section>
   <div class="footer">Phone contacts = array of structs • index O(1), search/sort/shift O(n log n / n)</div>
