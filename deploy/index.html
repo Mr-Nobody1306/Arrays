@@ -8,132 +8,85 @@
 <title>Contacts — Array Phone App (C++)</title>
 </head>
 <body>
+<style>
+</style>
 
-<div class="iphone">
-  <!-- LIST -->
-  <section class="view" id="viewListCtn">
-    <div class="navbar">
-      <button class="navbtn" id="arrayNavBtn">Array</button>
-      <button class="navbtn" id="addNavBtn" style="font-size:26px; line-height:1">+</button>
-    </div>
-    <div class="navbar"><h1>Contacts</h1></div>
-    <div class="searchrow"><div class="searchbox">⌕<input id="searchInput" type="text" placeholder="Search"></div></div>
-    <div class="listWrap" id="listWrapCtn">
-      <div id="sectionsCtn"></div>
-      <div class="alphaIdx" id="alphaIdxCtn"></div>
-    </div>
-  </section>
-
-  <!-- DETAIL -->
-  <section class="view" id="viewDetailCtn" hidden>
-    <div class="navbar" style="background:#f2f2f6">
-      <button class="navbtn" id="backBtn">‹ Contacts</button>
-      <button class="navbtn" id="editToggleBtn">Edit</button>
-    </div>
-    <div class="listWrap">
-      <div class="detailTop">
-        <div class="bigAvatar" id="detailAvatarEl">Y</div>
-        <div id="detailNameWrap"><div class="detailName" id="detailNameEl">Yaw Darko</div></div>
-        <div class="quickActions">
-          <div class="qa"><button id="detailCallBtn">✆</button><span>call</span></div>
-          <div class="qa"><button id="detailMsgBtn">💬</button><span>message</span></div>
-          <div class="qa"><button id="detailMailBtn">✉</button><span>mail</span></div>
+<div class="phoneFull">
+  <div class="apptop">
+    <h1>Contacts<small id="countEl">6 / 8 • array of struct</small></h1>
+    <button class="iconBtn" id="pdfBtn" title="Open explanation PDF"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>Guide</button>
+    <button class="iconBtn" id="cppBtn" title="Download contacts.cpp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>C++</button>
+  </div>
+  <div class="pages">
+    <section class="page" id="pageContactsCtn">
+      <div class="searchrow"><div class="searchbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="searchInput" type="text" placeholder="Search names (linear search)"></div></div>
+      <div class="contactList" id="contactListCtn"></div>
+      <div class="selBar">
+        <span class="muted" id="selInfoEl" style="flex:1">tap a row to select</span>
+        <button class="btn btn-dark btn-sm" id="editBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>Edit</button>
+        <button class="btn btn-dark btn-sm" id="delBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Delete</button>
+        <button class="btn btn-ghost btn-sm" id="callBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.34 1.79.66 2.64a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.44-1.23a2 2 0 0 1 2.11-.45c.85.32 1.74.54 2.64.66A2 2 0 0 1 22 16.92z"/></svg>Call</button>
+      </div>
+    </section>
+    <section class="page" id="pageArrayCtn" hidden>
+      <div class="arrayPage">
+        <div class="stats">
+          <div class="stat"><small>used n</small><b id="stNEl">6/8</b></div>
+          <div class="stat"><small>capacity</small><b>8</b></div>
+          <div class="stat"><small>search</small><b id="stCmpEl">–</b></div>
+          <div class="stat"><small>sorted?</small><b id="stSortEl">no</b></div>
         </div>
-      </div>
-      <div class="field">
-        <div class="frow"><span class="lab">mobile</span><a class="val" id="detailPhoneEl">027-342-8890</a></div>
-        <div class="frow"><span class="lab">array index</span><span class="val" id="detailIdxEl" style="font-family:ui-monospace,monospace; font-size:13px">[3] of 6</span></div>
-      </div>
-      <button class="dangerBtn" id="deleteContactBtn">Delete Contact</button>
-      <div style="height:30px"></div>
-    </div>
-  </section>
-
-  <!-- ADD / EDIT FORM -->
-  <section class="view" id="viewFormCtn" hidden>
-    <div class="navbar" style="background:#f2f2f6">
-      <button class="navbtn" id="formCancelBtn">Cancel</button>
-      <span class="navtitle" id="formTitleEl">New Contact</span>
-      <button class="navbtn" id="formDoneBtn" style="font-weight:700">Done</button>
-    </div>
-    <div class="listWrap">
-      <div class="formTop"><div class="formAva">add photo</div></div>
-      <div class="formCard">
-        <input id="firstInput" type="text" maxlength="20" placeholder="First name">
-        <input id="lastInput" type="text" maxlength="20" placeholder="Last name">
-      </div>
-      <div class="formCard">
-        <input id="phoneInput" type="tel" maxlength="15" placeholder="add phone">
-      </div>
-      <p class="muted" id="formMsgEl" style="padding:0 14px"></p>
-    </div>
-  </section>
-
-  <!-- ARRAY INSPECTOR -->
-  <section class="view" id="viewArrayCtn" hidden>
-    <div class="navbar" style="background:#f2f2f6">
-      <button class="navbtn" id="arrayBackBtn">‹ Contacts</button>
-      <span class="navtitle">Array</span>
-      <span style="width:70px"></span>
-    </div>
-    <div class="arrayScroll">
-      <div class="stats">
-        <div class="stat"><small>used n</small><b id="stNEl">6/8</b></div>
-        <div class="stat"><small>capacity</small><b>8</b></div>
-        <div class="stat"><small>search</small><b id="stCmpEl">–</b></div>
-        <div class="stat"><small>sorted?</small><b id="stSortEl">yes</b></div>
-      </div>
-      <div class="card">
-        <h4>Explanation & source</h4>
-        <div class="rowbtns">
-          <button class="btn btn-primary btn-sm" id="pdfBtn">📄 Guide PDF</button>
-          <button class="btn btn-dark btn-sm" id="copyCppBtn">📋 Copy C++</button>
-          <button class="btn btn-ghost btn-sm" id="dlCppBtn">⬇ .cpp</button>
-          <button class="btn btn-ghost btn-sm" id="resetBtn">↺ Reset</button>
+        <div class="card">
+          <h4>Explanation &amp; source</h4>
+          <div class="rowbtns">
+            <button class="btn btn-primary btn-sm" id="pdfBtn2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>Guide PDF</button>
+            <button class="btn btn-dark btn-sm" id="copyCppBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy C++</button>
+            <button class="btn btn-ghost btn-sm" id="dlCppBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>.cpp</button>
+            <button class="btn btn-ghost btn-sm" id="resetBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>Reset</button>
+          </div>
+          <p class="muted" id="cppMsgEl" style="margin:6px 0 0"></p>
+          <p class="muted">Arrays explained, 6 real C++ uses, and this app's design live in the PDF. The list on the Contacts tab is <b>Contact contacts[8]</b> — delete shifts left O(n), search counts comparisons O(n).</p>
         </div>
-        <p class="muted" id="cppMsgEl" style="margin:6px 0 0"></p>
-      </div>
-      <div class="card">
-        <h4>Demo ops</h4>
-        <div class="rowbtns">
-          <button class="btn btn-ghost btn-sm" id="fillBtn">fill to 8</button>
-          <button class="btn btn-ghost btn-sm" id="shuffleBtn">shuffle</button>
-          <button class="btn btn-ghost btn-sm" id="sortBtn2">sort A–Z</button>
-          <button class="btn btn-ghost btn-sm" id="clearSearchBtn">clear search</button>
+        <div class="card">
+          <h4>Demo ops</h4>
+          <div class="rowbtns">
+            <button class="btn btn-ghost btn-sm" id="sortBtn2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="13" y2="6"/><line x1="3" y1="12" x2="9" y2="12"/><line x1="3" y1="18" x2="5" y2="18"/><polyline points="16 8 19 5 22 8"/><line x1="19" y1="5" x2="19" y2="21"/></svg>sort A–Z</button>
+            <button class="btn btn-ghost btn-sm" id="shuffleBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>shuffle</button>
+            <button class="btn btn-ghost btn-sm" id="fillBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>fill to 8</button>
+            <button class="btn btn-ghost btn-sm" id="clearSearchBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>clear search</button>
+          </div>
         </div>
+        <div class="cppview"><h4>C++ just executed</h4><pre id="cppViewEl">Contact contacts[8]; int n = 6;</pre></div>
+        <div class="log" id="logCtn"><div><span class="info">›</span> ready. tap a contact, search, add, delete.</div></div>
       </div>
-      <div class="cppview"><h4>C++ just executed</h4><pre id="cppViewEl">Contact contacts[8]; int n = 6;</pre></div>
-      <div class="log" id="logCtn"><div><span class="info">›</span> ready.</div></div>
-    </div>
-  </section>
-
-  <!-- DELETE CONFIRM -->
-  <div class="mask" id="delMaskCtn" hidden>
-    <div class="asheet">
-      <div class="grp"><button class="danger" id="confirmDelBtn">Delete Contact</button></div>
-      <div class="grp"><button class="cancel" id="cancelDelBtn">Cancel</button></div>
+    </section>
+  </div>
+  <div class="sheet" id="addSheetCtn" hidden>
+    <h4 id="sheetTitleEl">New contact</h4>
+    <input id="nameInput" type="text" maxlength="28" placeholder="Name">
+    <input id="phoneInput" type="tel" maxlength="15" placeholder="Phone e.g. 055-000-0000">
+    <div class="rowbtns">
+      <button class="btn btn-dark btn-sm" id="saveContactBtn">Save</button>
+      <button class="btn btn-ghost btn-sm" id="cancelSheetBtn">Cancel</button>
+      <span class="muted" id="sheetMsgEl" style="font-size:12px"></span>
     </div>
   </div>
-
-  <!-- CALL -->
   <div class="calling" id="callingCtn" hidden>
     <div class="bigAvatar" id="callingAvatarEl">Y</div>
     <b id="callingNameEl" style="font-size:28px; font-weight:600">Yaw</b>
     <span id="callingNumEl" style="color:#d1d1d6">mobile</span>
-    <span id="callingTimerEl" style="font-size:14px; color:#d1d1d6">calling…</span>
-    <div class="callGrid">
-      <div class="cg"><button data-f="mute">🔇</button><span>mute</span></div>
-      <div class="cg"><button data-f="keypad">▦</button><span>keypad</span></div>
-      <div class="cg"><button data-f="speaker">🔊</button><span>speaker</span></div>
-      <div class="cg"><button data-f="ft">📹</button><span>FaceTime</span></div>
-      <div class="cg"><button data-f="msg">💬</button><span>message</span></div>
-      <div class="cg"><button data-f="con">👥</button><span>contacts</span></div>
-    </div>
-    <button class="endBtn" id="endCallBtn">✆</button>
+    <span id="callingTimerEl" style="font-family:ui-monospace,monospace">calling…</span>
+    <button class="endBtn" id="endCallBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.34 1.79.66 2.64a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.44-1.23a2 2 0 0 1 2.11-.45c.85.32 1.74.54 2.64.66A2 2 0 0 1 22 16.92z"/></svg></button>
+  </div>
+  <div class="tabbar">
+    <button id="tabContactsBtn" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Contacts</button>
+    <button id="tabArrayBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>Array</button>
+    <button id="tabAddBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add</button>
+    <button id="tabSortBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="13" y2="6"/><line x1="3" y1="12" x2="9" y2="12"/><line x1="3" y1="18" x2="5" y2="18"/><polyline points="16 8 19 5 22 8"/><line x1="19" y1="5" x2="19" y2="21"/></svg>Sort</button>
   </div>
 </div>
 
-<script src="action.js"></script>
+<script src="action.js" type="module"></script>
 
 </body>
 </html>
