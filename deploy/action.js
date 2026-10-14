@@ -140,8 +140,8 @@
   }
   function openPdf(){
     (async()=>{
-      for(const u of ['src/explanation.pdf','explanation.pdf','Arrays-Explanation.pdf']){try{const r=await fetch(u,{method:'HEAD'});if(r.ok){window.open(u,'_blank');return;}}catch(e){}}
-      window.open('src/explanation.pdf','_blank');
+      for(const u of ['explanation.pdf','explanation.pdf','Arrays-Explanation.pdf']){try{const r=await fetch(u,{method:'HEAD'});if(r.ok){window.open(u,'_blank');return;}}catch(e){}}
+      window.open('explanation.pdf','_blank');
     })();
   }
   $('pdfBtn').onclick=openPdf; $('pdfBtn2').onclick=openPdf;
